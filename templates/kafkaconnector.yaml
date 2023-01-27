@@ -1,0 +1,34 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: {{ .Values.job_name }}
+  # You can restart a connector by setting the annotation below.  See documentation here: https://github.com/strimzi/proposals/blob/main/007-restarting-kafka-connect-connectors-and-tasks.md
+  #annotations:
+  #  strimzi.io/restart: "true"
+  labels:
+    app: {{ .Values.job_name }}
+    # The strimzi.io/cluster label identifies the KafkaConnect instance
+    # in which to create this connector. That KafkaConnect instance
+    # must have the strimzi.io/use-connector-resources annotation
+    # set to true.
+    strimzi.io/cluster: {{ .Values.kafka_connect_cluster_name }}
+spec:
+  class: io.confluent.connect.jdbc.JdbcSinkConnector
+  tasksMax: {{ .Values.tasks.max }}
+  config:
+    name: {{.Values.job_name }}
+    connector.class: "io.confluent.connect.jdbc.JdbcSinkConnector"
+    auto.create: {{ .Values.config.auto.create }}
+    auto.evolve: {{ .Values.config.auto.evolve }}
+    # stringtype=unspecified makes the sql driver pass in regular strings instead of varchar varying.  This will allow postgres
+    # to do type coercion on the destination database, i.e., from string to datetime without any custom converters.
+    connection.password: {{ .Values.config.connection.password }}
+    connection.url: {{ .Values.config.connection.url }}
+    connection.user: {{ .Values.config.connection.user }}
+    delete.enabled: {{ .Values.config.delete.enabled }}
+    pk.mode: {{.Values.config.pk.mode }}
+    table.name.format: {{ .Values.config.table.name.format }}
+    time.precision.mode: {{ .Values.config.time.precision.mode }}
+    topics: {{ .Values.config.topics }}
+    insert.mode: {{ .Values.config.insert.mode }}
+    pk.fields: {{ .Values.config.pk.fields }}
