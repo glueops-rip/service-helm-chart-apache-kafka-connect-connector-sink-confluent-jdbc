@@ -1,0 +1,1 @@
+# service-helm-chart-apache-kafka-connect-connector-sink-confluent-jdbc
