@@ -1,0 +1,30 @@
+# Default values for hello-world.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+kafka_connect_cluster_name: nil
+job_name: nil
+tasks:
+  max: 1
+
+config:
+  connection:
+    url: jdbc:postgresql://hostname:5432/postgres?stringtype=unspecified
+    user: nil
+    password: nil
+  auto:
+    create: true
+    evolve: true
+  insert:
+    mode: insert
+  pk:
+    mode: none
+    fields: none
+  table:
+    name:
+      format: none
+  time:
+    precision:
+      mode: connect
+  topics: none
+  delete:
+    enabled: false
