@@ -5,7 +5,7 @@ kafka_connect_cluster_name: nil
 job_name: nil
 tasks:
   max: 1
-
+auto_restart_enabled: true
 config:
   connection:
     url: jdbc:postgresql://hostname:5432/postgres?stringtype=unspecified
